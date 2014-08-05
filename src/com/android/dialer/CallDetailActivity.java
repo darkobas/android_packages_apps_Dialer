@@ -68,12 +68,14 @@ import com.android.dialer.calllog.PhoneNumberUtilsWrapper;
 import com.android.dialer.util.AsyncTaskExecutor;
 import com.android.dialer.util.AsyncTaskExecutors;
 import com.android.dialer.util.DialerUtils;
+import com.android.dialer.util.CallRecordingPlayer;
 import com.android.dialer.voicemail.VoicemailPlaybackFragment;
 import com.android.dialer.voicemail.VoicemailStatusHelper;
 import com.android.dialer.voicemail.VoicemailStatusHelper.StatusMessage;
 import com.android.dialer.voicemail.VoicemailStatusHelperImpl;
 import com.android.dialerbind.analytics.AnalyticsActivity;
 import com.android.internal.telephony.PhoneConstants;
+import com.android.services.callrecorder.CallRecordingDataStore;
 
 import java.util.List;
 
@@ -116,6 +118,7 @@ public class CallDetailActivity extends AnalyticsActivity implements ProximitySe
 
     public static final String VOICEMAIL_FRAGMENT_TAG = "voicemail_fragment";
 
+
     private CallTypeHelper mCallTypeHelper;
     private PhoneNumberDisplayHelper mPhoneNumberHelper;
     private QuickContactBadge mQuickContactBadge;
@@ -155,6 +158,9 @@ public class CallDetailActivity extends AnalyticsActivity implements ProximitySe
 
     private ProximitySensorManager mProximitySensorManager;
     private final ProximitySensorListener mProximitySensorListener = new ProximitySensorListener();
+
+    private CallRecordingDataStore mCallRecordingDataStore = new CallRecordingDataStore();
+    private CallRecordingPlayer mCallRecordingPlayer = new CallRecordingPlayer();
 
     /** Listener to changes in the proximity sensor state. */
     private class ProximitySensorListener implements ProximitySensorManager.Listener {
@@ -272,6 +278,13 @@ public class CallDetailActivity extends AnalyticsActivity implements ProximitySe
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mCallRecordingDataStore.close();
+        mCallRecordingPlayer.stop();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         updateData(getCallLogEntryUris());
@@ -382,7 +395,6 @@ public class CallDetailActivity extends AnalyticsActivity implements ProximitySe
                 }
             }
         }
-
         return super.onKeyDown(keyCode, event);
     }
 
@@ -472,11 +484,6 @@ public class CallDetailActivity extends AnalyticsActivity implements ProximitySe
                 mHasRemoveFromCallLogOption = !hasVoicemail();
                 invalidateOptionsMenu();
 
-                ListView historyList = (ListView) findViewById(R.id.history);
-                historyList.setAdapter(
-                        new CallDetailHistoryAdapter(CallDetailActivity.this, mInflater,
-                                mCallTypeHelper, details));
-
                 String lookupKey = contactUri == null ? null
                         : ContactInfoHelper.getLookupKeyFromUri(contactUri);
 
@@ -503,6 +510,10 @@ public class CallDetailActivity extends AnalyticsActivity implements ProximitySe
 
                 loadContactPhotos(
                         contactUri, photoUri, nameForDefaultImage, lookupKey, contactType);
+                ListView historyList = (ListView) findViewById(R.id.history);
+                historyList.setAdapter(
+                        new CallDetailHistoryAdapter(CallDetailActivity.this, mInflater,
+                                mCallTypeHelper, details, mCallRecordingDataStore, mCallRecordingPlayer));
                 findViewById(R.id.call_detail).setVisibility(View.VISIBLE);
             }
 

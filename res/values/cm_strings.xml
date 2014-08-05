@@ -26,4 +26,8 @@
 
     <string name="detailed_incall_info_title">Detailed caller information</string>
     <string name="detailed_incall_info_summary">Display additional information about the caller in the incoming call screen</string>
+
+    <string name="start_call_playback">Play recording</string>
+    <string name="stop_call_playback">Stop</string>
+    <string name="call_playback_error_message">Failed to play recording</string>
 </resources>
