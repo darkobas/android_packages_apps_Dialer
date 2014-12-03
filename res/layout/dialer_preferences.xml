@@ -40,7 +40,7 @@
             android:singleLine="true"
             android:textAppearance="?android:attr/textAppearance"
             android:textSize="16sp"
-            android:textColor="@color/setting_primary_color"
+            android:textColor="@*android:color/primary_text_default_material_dark"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal" />
 
@@ -50,7 +50,7 @@
             android:layout_below="@id/title"
             android:layout_alignStart="@id/title"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/setting_secondary_color"
+            android:textColor="@*android:color/secondary_text_default_material_dark"
             android:lineSpacingExtra="@dimen/preference_summary_line_spacing_extra"
             android:ellipsize="end"
             android:maxLines="2" />

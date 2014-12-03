@@ -44,7 +44,6 @@
         <ListView android:id="@+id/dialpadChooser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/background_dialer_light"
                 android:visibility="gone" />
 
     </LinearLayout>
