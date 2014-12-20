@@ -62,9 +62,9 @@
         <item name="list_item_text_offset_top">-2dp</item>
         <!-- CallLog -->
         <item name="call_log_primary_text_color">@color/dialtacts_primary_text_color</item>
-        <item name="call_log_primary_background_color">#000000</item>
+        <item name="call_log_primary_background_color">#212121</item>
         <item name="call_log_secondary_text_color">@color/dialtacts_secondary_text_color</item>
-        <item name="call_log_secondary_background_color">#333333</item>
+        <item name="call_log_secondary_background_color">#323232</item>
         <item name="call_log_header_color">#33b5e5</item>
         <!-- VoicemailStatus -->
         <item name="call_log_voicemail_status_height">48dip</item>

@@ -54,11 +54,11 @@
     <!-- Background color for search results and call details -->
     <color name="background_dialer_results">#212121</color>
     <!-- Background color of dialer list items (contacts, call log entries) -->
-    <color name="background_dialer_list_items">#303030</color>
-    <color name="background_dialer_details_list_items">#323232</color>
+    <color name="background_dialer_list_items">#212121</color>
+    <color name="background_dialer_details_list_items">#424242</color>
 
     <!-- Color of the 1dp divider that separates favorites -->
-    <color name="favorite_contacts_separator_color">#80cbc4</color>
+    <color name="favorite_contacts_separator_color">#4dffffff</color>
 
     <color name="searchbox_icon_tint">#ffffff</color>
 
@@ -70,7 +70,7 @@
     <!-- Undo dialogue color -->
     <color name="undo_dialogue_text_color">#cccccc</color>
 
-    <color name="empty_list_text_color">#161616</color>
+    <color name="empty_list_text_color">#b3ffffff</color>
 
     <color name="remove_text_color">#ffffff</color>
 
