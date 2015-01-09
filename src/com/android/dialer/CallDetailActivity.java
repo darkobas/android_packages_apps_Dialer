@@ -152,10 +152,6 @@ public class CallDetailActivity extends AnalyticsActivity implements ProximitySe
     private boolean mHasTrashOption;
     /** Whether we should show "remove from call log" in the options menu. */
     private boolean mHasRemoveFromCallLogOption;
-    /** Whether we should show "Ip Call by SIM1" in the options menu. */
-    private boolean mHasSub1IpCallOption;
-    /** Whether we should show "Ip Call by SIM2" in the options menu. */
-    private boolean mHasSub2IpCallOption;
 
     private ProximitySensorManager mProximitySensorManager;
     private final ProximitySensorListener mProximitySensorListener = new ProximitySensorListener();
@@ -741,20 +737,6 @@ public class CallDetailActivity extends AnalyticsActivity implements ProximitySe
 
         menu.findItem(R.id.menu_video_call).setVisible(CallUtil.isCSVTEnabled());
 
-        menu.findItem(R.id.menu_ip_call_by_slot1).setVisible(mHasSub1IpCallOption);
-        menu.findItem(R.id.menu_ip_call_by_slot2).setVisible(mHasSub2IpCallOption);
-
-        if (mHasSub1IpCallOption) {
-            String sub1Name = MoreContactUtils.getMultiSimAliasesName(this, PhoneConstants.SUB1);
-            menu.findItem(R.id.menu_ip_call_by_slot1).setTitle(getString(
-                    com.android.contacts.common.R.string.ip_call_by_slot, sub1Name));
-        }
-        if (mHasSub2IpCallOption) {
-            String sub2Name = MoreContactUtils.getMultiSimAliasesName(this, PhoneConstants.SUB2);
-            menu.findItem(R.id.menu_ip_call_by_slot2).setTitle(getString(
-                    com.android.contacts.common.R.string.ip_call_by_slot, sub2Name));
-        }
-
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -763,52 +745,6 @@ public class CallDetailActivity extends AnalyticsActivity implements ProximitySe
             startActivity(CallUtil.getCSVTCallIntent(mNumber));
         } else if (false) {
             //add support for ims video call;
-        }
-    }
-
-    public void onMenuIpCallBySlot1(MenuItem menuItem) {
-        String prefix = MoreContactUtils.getIPCallPrefix(this, PhoneConstants.SUB1);
-        if (!TextUtils.isEmpty(prefix)) {
-            long[] subId = SubscriptionManager.getSubId(PhoneConstants.SUB1);
-            if (subId != null && subId.length >= 1) {
-                ComponentName serviceName =
-                        new ComponentName("com.android.phone",
-                        "com.android.services.telephony.TelephonyConnectionService");
-                PhoneAccountHandle account = new PhoneAccountHandle(serviceName,
-                        String.valueOf(subId[0]));
-                Intent callIntent = new Intent(CallUtil.getCallIntent(
-                        prefix + mNumber, account));
-                startActivity(callIntent);
-            } else {
-                Intent callIntent = new Intent(CallUtil.getCallIntent(
-                        prefix + mNumber));
-                startActivity(callIntent);
-            }
-        } else {
-            MoreContactUtils.showNoIPNumberDialog(this, PhoneConstants.SUB1);
-        }
-    }
-
-    public void onMenuIpCallBySlot2(MenuItem menuItem) {
-        String prefix = MoreContactUtils.getIPCallPrefix(this, PhoneConstants.SUB2);
-        if (!TextUtils.isEmpty(prefix)) {
-            long[] subId = SubscriptionManager.getSubId(PhoneConstants.SUB2);
-            if (subId != null && subId.length >= 1) {
-                ComponentName serviceName =
-                        new ComponentName("com.android.phone",
-                        "com.android.services.telephony.TelephonyConnectionService");
-                PhoneAccountHandle account = new PhoneAccountHandle(serviceName,
-                        String.valueOf(subId[0]));
-                Intent callIntent = new Intent(CallUtil.getCallIntent(
-                        prefix + mNumber, account));
-                startActivity(callIntent);
-            } else {
-                Intent callIntent = new Intent(CallUtil.getCallIntent(
-                        prefix + mNumber));
-                startActivity(callIntent);
-            }
-        } else {
-            MoreContactUtils.showNoIPNumberDialog(this, PhoneConstants.SUB2);
         }
     }
 
