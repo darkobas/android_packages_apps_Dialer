@@ -470,16 +470,6 @@ public class CallDetailActivity extends AnalyticsActivity implements ProximitySe
                         canPlaceCallsTo && !isSipNumber && !isVoicemailNumber;
                 mHasTrashOption = hasVoicemail();
                 mHasRemoveFromCallLogOption = !hasVoicemail();
-                mHasSub1IpCallOption = canPlaceCallsTo
-                        && !isSipNumber
-                        && !isVoicemailNumber
-                        && MoreContactUtils
-                                .isMultiSimEnable(CallDetailActivity.this, PhoneConstants.SUB1);
-                mHasSub2IpCallOption = canPlaceCallsTo
-                        && !isSipNumber
-                        && !isVoicemailNumber
-                        && MoreContactUtils
-                                .isMultiSimEnable(CallDetailActivity.this, PhoneConstants.SUB2);
                 invalidateOptionsMenu();
 
                 ListView historyList = (ListView) findViewById(R.id.history);
