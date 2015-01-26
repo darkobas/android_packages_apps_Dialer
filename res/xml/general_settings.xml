@@ -16,9 +16,7 @@
   ~ limitations under the License
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-        android:background="@*android:color/background_material_dark" >
-
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
         android:key="dialer_contact_display_options_category_key"
