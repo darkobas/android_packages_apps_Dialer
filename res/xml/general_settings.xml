@@ -56,8 +56,7 @@
         <CheckBoxPreference
             android:key="button_vibrate_on_ring"
             android:title="@string/vibrate_on_ring_title"
-            android:persistent="false"
-            android:defaultValue="false" />
+            android:persistent="false" />
 
     </PreferenceCategory>
 
