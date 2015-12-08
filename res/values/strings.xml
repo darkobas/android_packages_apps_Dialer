@@ -1072,4 +1072,15 @@
 
     <!-- Accessibility announcement to indicate which call is active -->
     <string name="accessibility_call_is_active"><xliff:g id="nameOrNumber">^1</xliff:g> is active</string>
+
+    <!-- ####### CAF ###### -->
+    <string name="call_log_show_all_slots">All SIMs</string>
+
+    <string name="call_log_all_calls_header">All calls</string>
+
+    <!-- Text displayed when the list of incoming calls is empty -->
+    <string name="recentIncoming_empty">You have no incoming calls.</string>
+
+    <!-- Text displayed when the list of outgoing calls is empty -->
+    <string name="recentOutgoing_empty">You have no outgoing calls.</string>
 </resources>
