@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.android.contacts.common.compat.CompatUtils;
 import com.android.contacts.common.compat.TelephonyManagerCompat;
+import com.android.contacts.common.CallUtil;
 import com.android.dialer.R;
 import com.android.dialer.compat.FilteredNumberCompat;
 import com.android.dialer.compat.SettingsCompat;
@@ -127,6 +128,16 @@ public class DialerSettingsActivity extends AppCompatPreferenceActivity {
             accessibilitySettingsHeader.intent = accessibilitySettingsIntent;
             target.add(accessibilitySettingsHeader);
         }
+        //video calling
+        boolean enablePresence = this.getResources().getBoolean(
+                R.bool.config_regional_presence_enable);
+        if(enablePresence){
+            Header videocallingHeader = new Header();
+            videocallingHeader.titleRes = R.string.video_call;
+            videocallingHeader.fragment = VideoCallingSettingsFragment.class.getName();
+            target.add(videocallingHeader);
+        }
+
     }
 
     /**

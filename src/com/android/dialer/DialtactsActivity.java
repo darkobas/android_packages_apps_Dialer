@@ -85,6 +85,7 @@ import com.android.dialer.util.Assert;
 import com.android.dialer.util.DialerUtils;
 import com.android.dialer.util.IntentUtil;
 import com.android.dialer.util.IntentUtil.CallIntentBuilder;
+import com.android.dialer.util.PresenceHelper;
 import com.android.dialer.util.TelecomUtil;
 import com.android.dialer.voicemail.VoicemailArchiveActivity;
 import com.android.dialer.widget.ActionBarController;
@@ -492,6 +493,28 @@ public class DialtactsActivity extends TransactionSafeActivity implements View.O
         Trace.beginSection(TAG + " initialize smart dialing");
         mDialerDatabaseHelper = DatabaseHelperManager.getDatabaseHelper(this);
         SmartDialPrefix.initializeNanpSettings(this);
+
+        boolean isPresenceEnabled = this.getResources().getBoolean(
+                R.bool.config_regional_presence_enable);
+        if (isPresenceEnabled && !PresenceHelper.isBound()) {
+            PresenceHelper.bindService((Context) DialtactsActivity.this);
+        }
+
+        mWifiCallUtils = new WifiCallUtils();
+        if (resources.getBoolean(R.bool.config_regional_pup_no_available_network)
+                && mFirstLaunch) {
+            mWifiCallUtils.addWifiCallReadyMarqueeMessage((Context) DialtactsActivity.this);
+            if (ActivityCompat.checkSelfPermission(DialtactsActivity.this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(
+                            new String[] {Manifest.permission.ACCESS_COARSE_LOCATION},
+                            PERMISSION_REQUEST_CODE_LOCATION);
+            } else {
+                mWifiCallUtils.showWifiCallNotification((Context) DialtactsActivity.this);
+            }
+        }
+
         Trace.endSection();
         Trace.endSection();
     }
@@ -579,6 +602,14 @@ public class DialtactsActivity extends TransactionSafeActivity implements View.O
             commitDialpadFragmentHide();
         }
         super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        if (PresenceHelper.isBound()) {
+            PresenceHelper.unbindService((Context) DialtactsActivity.this);
+        }
+        super.onStop();
     }
 
     @Override
