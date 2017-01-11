@@ -1110,4 +1110,5 @@
 
     <!-- Text displayed when the list of outgoing calls is empty -->
     <string name="recentOutgoing_empty">You have no outgoing calls.</string>
+    <string name="video_call">Video Calling</string>
 </resources>
